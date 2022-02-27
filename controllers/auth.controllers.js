@@ -1,20 +1,34 @@
-const UsersDao = require('../models/daos/Users.dao');
-const AccountsDao = require('../models/daos/Accounts.dao');
-const { formatUserForDB } = require('../utils/users.utils');
-const { generateInitialAccount } = require('../utils/accounts.utils');
-const { apiSuccessResponse } = require('../utils/api.utils');
 const { STATUS } = require('../constants/api.constants');
+const UsersDao = require('../models/daos/Users.dao');
+const { apiSuccessResponse } = require('../utils/api.utils');
+const { formatUserForDB } = require('../utils/users.utils');
 
 const User = new UsersDao();
-const Account = new AccountsDao();
 
-const createAccount = async (userId) => {
-  const accountItem = generateInitialAccount();
-  accountItem.owner = userId;
-  return await Account.createItem(accountItem);
+const register = async (req, res, next) => {
+  const newUser = formatUserForDB(req.body);
+  try {
+    const registeredUser = await User.createUser(newUser);
+    req.session.user = registeredUser;
+    return res.redirect('/profile');
+  }
+  catch(error) {
+    next(error);
+  }
 };
 
 const login = async (req, res, next) => {
+  try {
+    const user = req.session.user;
+    const accounts = await User.getUserAccounts(user);
+    return res.json(apiSuccessResponse(STATUS.OK, accounts));
+  }
+  catch {
+
+  }
+};
+
+const logout = async (req, res, next) => {
   try {
 
   }
@@ -23,20 +37,8 @@ const login = async (req, res, next) => {
   }
 };
 
-const register = async (req, res, next) => {
-  const newUser = formatUserForDB(req.body);
-  try {
-    const registeredUser = await User.createItem(newUser, createAccount);
-    return res
-      .status(STATUS.CREATED.code)
-      .json(apiSuccessResponse(STATUS.CREATED, registeredUser));
-  }
-  catch(error) {
-    next(error);
-  }
-};
-
 module.exports = {
   login,
   register,
+  logout,
 }

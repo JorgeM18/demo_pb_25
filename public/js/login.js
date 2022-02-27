@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const datepickerOptions = {
     autoClose: true,
     format: 'mmmm dd, yyyy',
-    parse: (date) => new Date(date)
+    yearRange: 50,
   }
   M.Datepicker.init(elems, datepickerOptions);
 });

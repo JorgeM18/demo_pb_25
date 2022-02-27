@@ -127,7 +127,7 @@ h6 {
 }
 
 .hide-form {
-  animation: hideForm 1s linear forwards;
+  animation: hideForm 0.5s linear forwards;
 }
 
 .show-form {
@@ -135,22 +135,22 @@ h6 {
 }
 
 .window-to-left-frame {
-  animation: windowToLeft 1s linear forwards;
+  animation: windowToLeft 0.5s linear forwards;
   transform-origin: 0% 0%;
 }
 
 .window-to-right-frame {
-  animation: windowToRight 1s linear forwards;
+  animation: windowToRight 0.5s linear forwards;
   transform-origin: 100% 0%;
 }
 
 .content-to-left-frame {
-  animation: contentToLeft 1s linear forwards;
+  animation: contentToLeft 0.5s linear forwards;
   transform-origin: 50% 0%;
 }
 
 .content-to-right-frame {
-  animation: contentToRight 1s linear forwards;
+  animation: contentToRight 0.5s linear forwards;
   transform-origin: 50% 0%;
 }
 

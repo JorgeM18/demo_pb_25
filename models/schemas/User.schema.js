@@ -24,7 +24,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   createdAt: { type: Date, required: true },
   updatedAt: { type: Date, required: true },
-  accounts: [{ type: Schema.Types.ObjectId, ref: "Account" }],
+  accounts: [{ type: Schema.Types.ObjectId, ref: "Account", required: true }],
 });
 
 module.exports = UserSchema;
