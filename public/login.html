@@ -98,7 +98,7 @@
                 Create Account
               </h4>
               <div class="row">
-                <form action="" method="" class="col s12">
+                <form action="/api/auth/register" method="post" class="col s12">
                   <div class="row">
                     <div class="input-field col s6">
                       <input
@@ -132,6 +132,7 @@
                       <input
                         type="text"
                         id="datepicker"
+                        name="birthdate"
                         class="datepicker p-left"
                       />
                       <label for="datepicker" class="pos-left">Birthdate</label>
@@ -147,6 +148,7 @@
                       <input
                         id="email"
                         type="email"
+                        name="email"
                         class="validate p-left"
                         required
                       />

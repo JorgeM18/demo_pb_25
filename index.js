@@ -6,14 +6,13 @@ const MongoStore = require('connect-mongo');
 const auth = require('./middlewares/auth');
 const env = require('./env.config');
 const dbConfig = require('./db/config');
+const apisRoutes = require('./routers/app.routers');
 
 const PORT = env.PORT || 8080;
 
 const app = express();
 
 // Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 app.use(session({
   name: 'coder-session',
@@ -30,6 +29,7 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 // Routes
+app.use(apisRoutes);
 app.get('/', async (req, res) => {
   const user = await req.session.user;
   if (user) {

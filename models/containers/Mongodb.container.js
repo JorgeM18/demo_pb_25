@@ -57,17 +57,19 @@ class MongoDBContainer {
     }
   }
 
-  async createItem(resourceItem) {
+  async createItem(resourceItem, populateCallback = null) {
     try {
       const newItem = new this.model(resourceItem);
       await newItem.save();
+      populateCallback && await populateCallback(newItem._id);
       return newItem;
     }
     catch (err) {
+      console.log('error creating item >>> ', err);
       const newError = formatErrorObject(INTERNAL_ERROR.tag, err.message);
       throw new Error(JSON.stringify(newError));
     }
   }
 }
 
-export default MongoDBContainer;
+module.exports = MongoDBContainer;

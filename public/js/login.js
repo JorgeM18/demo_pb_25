@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const elems = document.querySelectorAll('.datepicker');
   const datepickerOptions = {
     autoClose: true,
-    format: 'mmmm dd, yyyy'
+    format: 'mmmm dd, yyyy',
+    parse: (date) => new Date(date)
   }
   M.Datepicker.init(elems, datepickerOptions);
 });

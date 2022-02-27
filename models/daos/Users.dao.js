@@ -4,8 +4,16 @@ const UserSchema = require('../schemas/User.schema');
 const collection = 'User';
 
 class UsersDao extends MongoDBContainer {
+  static instance;
   constructor() {
-    super(collection, UserSchema);
+    if (!UsersDao.instance) {
+      super(collection, UserSchema);
+      UsersDao.instance = this;
+      return this;
+    }
+    else {
+      return UsersDao.instance;
+    }
   }
 };
 

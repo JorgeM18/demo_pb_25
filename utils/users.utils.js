@@ -1,20 +1,24 @@
 const moment = require('moment');
 
-const formatForDB = (userObj) => {
+const formatUserForDB = (userObj) => {
   const today = moment();
-  const userAge = moment(userObj.birthdate).diff(today, 'years');
+
+  const birthdate = moment(userObj.birthdate, "MMMM DD, YYYY").startOf('day');
+  const userAge = today.diff(birthdate, 'years');
   const newUser = {
     firstname: userObj.firstname,
     lastname: userObj.lastname,
-    birthdate: userObj.birthdate,
-    age: userAge,
+    birthdate: birthdate.format('DD-MM-YYYY'),
+    age: +userAge,
     email: userObj.email,
     password: userObj.password,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    accounts: null
   };
   return newUser;
 };
 
 module.exports = {
-  formatForDB,
-  
+  formatUserForDB,
 }

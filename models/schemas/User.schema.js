@@ -7,22 +7,23 @@ const UserSchema = new Schema({
   lastname: { type: String, required: true },
   birthdate: { type: String, required: true },
   age: { 
-    type: Number, required: true, 
+    type: Number, 
+    required: true, 
     min: [18, 'Age is below minimun required'],
-    max: [150, 'Age exceeds maximum value allowed']
+    max: [150, 'Age exceeds maximum value allowed'],
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    validate: {
-      match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-      message: "Invalid email",
-    },
+    match: [
+      /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+      "Invalid email",
+    ],
   },
   password: { type: String, required: true },
   createdAt: { type: Date, required: true },
-  updatedAt: { typ: Date, required: true },
+  updatedAt: { type: Date, required: true },
   accounts: [{ type: Schema.Types.ObjectId, ref: "Account" }],
 });
 
