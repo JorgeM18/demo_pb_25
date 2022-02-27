@@ -26,5 +26,5 @@ const UserSchema = new Schema({
   updatedAt: { type: Date, required: true },
   accounts: [{ type: Schema.Types.ObjectId, ref: "Account", required: true }],
 });
-
+UserSchema.index({ email: 1 });
 module.exports = UserSchema;

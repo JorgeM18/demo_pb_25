@@ -1,6 +1,6 @@
 const { STATUS } = require('../constants/api.constants');
 const UsersDao = require('../models/daos/Users.dao');
-const { apiSuccessResponse } = require('../utils/api.utils');
+const { formatErrorObject } = require('../utils/api.utils');
 const { formatUserForDB } = require('../utils/users.utils');
 
 const User = new UsersDao();
@@ -13,32 +13,28 @@ const register = async (req, res, next) => {
     return res.redirect('/profile');
   }
   catch(error) {
+    console.log(error.message);
     next(error);
   }
 };
 
 const login = async (req, res, next) => {
+  const { email, password } = req.body;
   try {
-    const user = req.session.user;
-    const accounts = await User.getUserAccounts(user);
-    return res.json(apiSuccessResponse(STATUS.OK, accounts));
+    const user = await User.getByEmail(email);
+    if (user.password !== password) {
+      const newError = formatErrorObject(STATUS.BAD_REQUEST, 'Wrong username of password');
+      return next(JSON.stringify(newError));
+    }
+    req.session.user = user;
+    return res.redirect('/profile');
   }
-  catch {
-
-  }
-};
-
-const logout = async (req, res, next) => {
-  try {
-
-  }
-  catch {
-
+  catch(error) {
+    next(error);
   }
 };
 
 module.exports = {
   login,
   register,
-  logout,
 }
