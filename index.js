@@ -1,7 +1,8 @@
-const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose');
+
 
 const env = require('./env.config');
 const dbConfig = require('./db/config');
@@ -32,5 +33,9 @@ app.use(apisRoutes);
 
 
 app.listen(PORT, async () => {
-  console.log('Server is up and running on port: ', +PORT);
+  mongoose.connect(dbConfig.mongodb.connectTo('ecommerce'))
+  .then(() => {
+    console.log('Connected to DB!');
+    console.log('Server is up and running on port: ', +PORT);
+  });
 });

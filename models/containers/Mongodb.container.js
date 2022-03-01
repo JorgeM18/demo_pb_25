@@ -1,6 +1,5 @@
 
 const mongoose = require('mongoose');
-const dbConfig = require('../../db/config');
 const { formatErrorObject } = require('../../utils/api.utils');
 const constants = require('../../constants/api.constants');
 
@@ -15,18 +14,7 @@ const {
 class MongoDBContainer {
   static instancia;
   constructor(collection, Schema) {
-    if (!MongoDBContainer.instancia) {
-      mongoose.connect(dbConfig.mongodb.connectTo('ecommerce'))
-        .then(() => {
-          console.log('Connected to DB!');
-          MongoDBContainer.instancia = this;
-        });
-      this.model = mongoose.model(collection, Schema);
-    }
-    else {
-      MongoDBContainer.instancia.model = mongoose.model(collection, Schema);
-      return MongoDBContainer.instancia;
-    }
+    this.model = mongoose.model(collection, Schema);
   };
 
   async getAll(filter = {}) {
