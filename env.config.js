@@ -1,13 +1,7 @@
 require('dotenv').config();
 
-const {
-  PORT,
-  DB_PASSWORD,
-  SESSION_SECRET
-} = process.env;
-
 module.exports = {
-  PORT,
-  DB_PASSWORD,
-  SESSION_SECRET,
+  PORT: process.env.PORT || 8080,
+  DB_PASSWORD: process.env.DB_PASSWORD || '',
+  SESSION_SECRET: process.env.SESSION_SECRET || '',
 }

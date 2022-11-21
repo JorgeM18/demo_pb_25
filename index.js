@@ -17,7 +17,7 @@ const app = express();
 app.use(express.static('./public'));
 app.use(session({
   name: 'coder-session',
-  secret: env.SESSION_SECRET || '',
+  secret: env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
