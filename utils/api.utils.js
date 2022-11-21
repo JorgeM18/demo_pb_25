@@ -1,30 +1,28 @@
-const constants = require('../constants/api.constants');
-
-const formatErrorObject = (error, message) => ({
-  error,
-  message,
-});
-
-const apiSuccessResponse = (status, data) => ({
-  error: false,
-  statusTag: status.tag,
-  statusCode: status.code,
-  data,
-});
-
-const apiErrorResponse = (errorItem) => {
-  const statusItem = Object.keys(constants.STATUS)
-    .find(status => status.tag === errorItem.error);
+const successResponse = (data) => {
   return {
-    error: true,
-    statusTag: statusItem.tag,
-    statusCode: statusItem.code,
-    message: error.message,
+    success: true,
+    data
   }
-};
+}
+
+const errorResponse = (message, details = null) => {
+  return {
+    success: false,
+    message,
+    details
+  }
+}
+
+class HttpError {
+  constructor(status, message, details) {
+    this.statusCode = status;
+    this.message = message;
+    this.details = details;
+  }
+}
 
 module.exports = {
-  formatErrorObject,
-  apiSuccessResponse,
-  apiErrorResponse,
+  successResponse,
+  errorResponse,
+  HttpError
 }

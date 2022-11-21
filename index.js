@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const env = require('./env.config');
 const dbConfig = require('./db/config');
 const apisRoutes = require('./routers/app.routers');
+const MongoContainer = require('./models/containers/Mongodb.container');
 
 const PORT = env.PORT || 8080;
 
@@ -16,7 +17,7 @@ const app = express();
 app.use(express.static('./public'));
 app.use(session({
   name: 'coder-session',
-  secret: env.SESSION_SECRET,
+  secret: env.SESSION_SECRET || '',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
@@ -33,7 +34,7 @@ app.use(apisRoutes);
 
 
 app.listen(PORT, async () => {
-  mongoose.connect(dbConfig.mongodb.connectTo('ecommerce'))
+  MongoContainer.connect()
   .then(() => {
     console.log('Connected to DB!');
     console.log('Server is up and running on port: ', +PORT);
